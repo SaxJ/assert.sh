@@ -25,7 +25,7 @@ tc_fail()
 
 tc_finish()
 {
-    duration=$SECONDS * 1000
+    duration=$(( $SECONDS * 1000 ))
     echo "##teamcity[testFinished name='$CURRENT_TEST' duration='$duration']"
 }
 
