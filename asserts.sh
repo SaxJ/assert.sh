@@ -19,7 +19,7 @@ tc_start()
 
 tc_fail()
 {
-    echo "##teamcity[testFailed name='$CURRENT_TEST' message='$1' details='$2']"
+    echo "##teamcity[testFailed name='$CURRENT_TEST' message='$1' details='$2' expected='$3' actual='$4']"
 }
 
 tc_finish()
@@ -28,10 +28,15 @@ tc_finish()
     echo "##teamcity[testFinished name='$CURRENT_TEST' duration='$duration']"
 }
 
-test()
+test_start()
 {
     CURRENT_TEST="$1"
     tc_start
+}
+
+test_finish()
+{
+    tc_finish
 }
 
 ssh_sync()
@@ -52,11 +57,12 @@ ssh_file()
 assert_contains()
 {
     result="$(eval $1)"
+    echo "$result"
     if [[ "$result" == *"$2"* ]]
     then
-        echo "Passed"
+        echo "[ASSERTION] passed"
     else
-        echo "Failed"
-        tc_fail "Assertion failed" "$result"
+        echo "[ASSERTION] failed"
+        tc_fail "Assertion failed" "Command output did not contain desired string." "$2" "$result"
     fi
 }
