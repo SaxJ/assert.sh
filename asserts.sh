@@ -6,6 +6,7 @@ fi
 
 export SERVER="root@10.240.106.104"
 export CLIENT="root@10.240.106.101"
+export CLIENT_VIPER="root@10.240.106.105"
 export SSHPASS="!Vix!71639kuyhn"
 export CURRENT_TEST=""
 SECONDS=0
@@ -57,7 +58,6 @@ ssh_file()
 assert_contains()
 {
     result="$(eval $1)"
-    echo "$result"
     if [[ "$result" == *"$2"* ]]
     then
         echo "[ASSERTION] passed"
