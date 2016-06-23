@@ -1,7 +1,7 @@
 #!/bin/bash
 # INSTALL DEPENDANCIES
 if ! type sshpass > /dev/null; then
-    apt-get install -y sshpass
+    sudo apt-get install -y sshpass
 fi
 
 export SERVER="root@10.240.106.104"
