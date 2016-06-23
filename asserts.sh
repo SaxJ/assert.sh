@@ -20,12 +20,12 @@ tc_start()
 
 tc_fail()
 {
-    echo "##teamcity[testFailed name='$CURRENT_TEST' message='$1' details='$2' expected='$3' actual='$4']"
+    (>&2 echo "##teamcity[testFailed type='comparisonFailure' name='$CURRENT_TEST' message='$1' details='$2' expected='$3' actual='$4']")
 }
 
 tc_finish()
 {
-    duration=$SECONDS
+    duration=$SECONDS * 1000
     echo "##teamcity[testFinished name='$CURRENT_TEST' duration='$duration']"
 }
 

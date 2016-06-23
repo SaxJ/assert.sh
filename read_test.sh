@@ -24,9 +24,9 @@ test_start "ReadTests"
 ssh_start $SERVER "killall bre_server_app; $bre_server"
 
 cmd="$bre_client -n10.240.106.104 -d01020304050607 -v01020304050607 -R"
-assert_contains "ssh_sync $CLIENT '${cmd}5'" "Got Server Information" #5 reads
-assert_contains "ssh_sync $CLIENT '${cmd}10'" "Got Server Information" #10 reads
-assert_contains "ssh_sync $CLIENT '${cmd}100'" "Got Server Information" #100 reads
+assert_contains "ssh_sync $CLIENT '${cmd}5'" "Read test passed" #5 reads
+assert_contains "ssh_sync $CLIENT '${cmd}10'" "Read test passed" #10 reads
+assert_contains "ssh_sync $CLIENT '${cmd}100'" "Read test passed" #100 reads
 
 echo "kill server and check read tests fail"
 ssh_sync $SERVER "killall bre_server_app"
@@ -40,9 +40,9 @@ test_start "ReadTests_RS485"
 ssh_start $SERVER "killall bre_server_app; $bre_server_rs485"
 
 cmd="$bre_client -a1 -r/dev/ttymxc4 -d01020304050607 -v01020304050607 -R"
-assert_contains "ssh_sync $CLIENT_VIPER '${cmd}5'" "Got Server Information" #5 reads
-assert_contains "ssh_sync $CLIENT_VIPER '${cmd}10'" "Got Server Information" #10 reads
-assert_contains "ssh_sync $CLIENT_VIPER '${cmd}100'" "Got Server Information" #100 reads
+assert_contains "ssh_sync $CLIENT_VIPER '${cmd}5'" "Read test passed" #5 reads
+assert_contains "ssh_sync $CLIENT_VIPER '${cmd}10'" "Read test passed" #10 reads
+assert_contains "ssh_sync $CLIENT_VIPER '${cmd}100'" "Read test passed" #100 reads
 
 echo "kill server and check read tests fail"
 ssh_sync $SERVER "killall bre_server_app"
