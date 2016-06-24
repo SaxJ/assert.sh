@@ -61,6 +61,7 @@ assert_contains()
     if [[ "$result" == *"$2"* ]]
     then
         echo "[ASSERTION] passed"
+        echo "##teamcity[progressMessage '$result']"
     else
         echo "[ASSERTION] failed"
         tc_fail "Assertion failed" "Command output did not contain desired string." "$2" "$result"

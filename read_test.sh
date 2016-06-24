@@ -50,3 +50,47 @@ assert_contains "ssh_sync $CLIENT_VIPER '$cmd'" "Command failed"
 test_finish
 
 ########################################
+
+test_start "List_Atr"
+
+ssh_start $SERVER "killall bre_server_app; $bre_server"
+
+cmd="$bre_client -n10.240.106.104 -L"
+echo "$cmd"
+assert_contains "ssh_sync $CLIENT '${cmd}'" "HCM Session Information" # List SAMs
+
+test_finish
+
+########################################
+
+test_start "CardDetect"
+
+ssh_start $SERVER "killall bre_server_app; $bre_server"
+
+cmd="$bre_client -n10.240.106.104 -cd"
+echo "$cmd"
+assert_contains "ssh_sync $CLIENT '${cmd}'" "ATP = 01 0D 21 02 44 00 00 07 04 C7 07 D2 A0 3C 84"
+
+cmd="$bre_client -S -n10.240.106.104 -d01020304050607 -v01020304050607 -cd"
+echo "$cmd"
+assert_contains "ssh_sync $CLIENT '${cmd}'" "ATP = 01 0D 41 02 44 00 00 07 01 02 03 04 05 06 07 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+
+test_finish
+
+########################################
+
+test_start "Initialisation"
+
+ssh_start $SERVER "killall bre_server_app; $bre_server"
+
+cmd="$bre_client -S -n10.240.106.104 -v01020304050607 -d01020304050607 -d01020304050607"
+echo "$cmd"
+assert_contains "ssh_sync $CLIENT '${cmd}'" "Command result indicated failure"
+
+cmd="$bre_client -S -n10.240.106.104 -d01020304050607 -v01020304050607 -I"
+echo "$cmd"
+assert_contains "ssh_sync $CLIENT '${cmd}'" "Card initialised ok"
+
+test_finish
+
+########################################
