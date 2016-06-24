@@ -11,6 +11,11 @@ export SSHPASS="!Vix!71639kuyhn"
 export CURRENT_TEST=""
 SECONDS=0
 
+tc_escape_str()
+{
+    echo "$1"
+    #echo $( echo "$1" | sed -e 's/"/|"/g' -e "s/'/|'/g" )
+}
 
 tc_start()
 {
@@ -20,7 +25,7 @@ tc_start()
 
 tc_fail()
 {
-    echo "##teamcity[message text='Output Comparison Error' errorDetails='$2' status='ERROR'"
+    echo "##teamcity[message text='Output Comparison Error' errorDetails='$( tc_escape_str "$4" )' status='ERROR'"
 }
 
 tc_finish()
@@ -61,9 +66,9 @@ assert_contains()
     if [[ "$result" == *"$2"* ]]
     then
         echo "[ASSERTION] passed"
-        echo "##teamcity[progressMessage '$result']"
+        echo "##teamcity[progressMessage '$( tc_escape_str "$result" )']"
     else
         echo "[ASSERTION] failed"
-        tc_fail "Assertion failed" "Command output did not contain desired string." "$2" "$result"
+        tc_fail "Assertion failed" "Command output did not contain desired string." "$( tc_escape_str "$4" )" "$( tc_escape_str "$result" )"
     fi
 }

@@ -53,7 +53,8 @@ test_finish
 
 test_start "List_Atr"
 
-ssh_start $SERVER "killall bre_server_app; $bre_server"
+ssh_start $SERVER "killall bre_server_app; $bre_server" #start bre-server-app for next tests
+sleep 5
 
 cmd="$bre_client -n10.240.106.104 -L"
 echo "$cmd"
@@ -65,7 +66,6 @@ test_finish
 
 test_start "CardDetect"
 
-ssh_start $SERVER "killall bre_server_app; $bre_server"
 
 cmd="$bre_client -n10.240.106.104 -p -cd"
 echo "$cmd"
@@ -81,7 +81,6 @@ test_finish
 
 test_start "Initialisation"
 
-ssh_start $SERVER "killall bre_server_app; $bre_server"
 
 cmd="$bre_client -S -n10.240.106.104 -v01020304050607 -d01020304050607 -d01020304050607"
 echo "$cmd"
