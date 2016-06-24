@@ -2,6 +2,7 @@
 . asserts.sh
 
 bre_client="/afc/bre-client-test/bin/bre_client_test"
+bre_client_vix="/afc/bre-client-test-vix/bin/bre_client_test_vix"
 bre_server="/afc/bre-server-app/bin/bre_server_app -n9000"
 bre_server_rs485="/afc/bre-server-app/bin/bre_server_app -n9000 -a1 -r/dev/ttymxc4"
 
@@ -89,6 +90,17 @@ assert_contains "ssh_sync $CLIENT '${cmd}'" "result indicated failure"
 cmd="$bre_client -S -n10.240.106.104 -d01020304050607 -v01020304050607 -I"
 echo "$cmd"
 assert_contains "ssh_sync $CLIENT '${cmd}'" "Card initialised ok"
+
+test_finish
+
+########################################
+
+test_start "Purse_Txn_Network"
+
+
+cmd="$bre_client_vix -n10.240.106.104 -U5"
+echo "$cmd"
+assert_contains "ssh_sync $CLIENT '${cmd}'" "TXN_TEST_PURSE_USAGE"
 
 test_finish
 
