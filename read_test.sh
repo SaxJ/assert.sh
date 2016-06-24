@@ -67,7 +67,7 @@ test_start "CardDetect"
 
 ssh_start $SERVER "killall bre_server_app; $bre_server"
 
-cmd="$bre_client -n10.240.106.104 -cd"
+cmd="$bre_client -n10.240.106.104 -p -cd"
 echo "$cmd"
 assert_contains "ssh_sync $CLIENT '${cmd}'" "ATP = 01 0D 21 02 44 00 00 07 04 C7 07 D2 A0 3C 84"
 
@@ -85,7 +85,7 @@ ssh_start $SERVER "killall bre_server_app; $bre_server"
 
 cmd="$bre_client -S -n10.240.106.104 -v01020304050607 -d01020304050607 -d01020304050607"
 echo "$cmd"
-assert_contains "ssh_sync $CLIENT '${cmd}'" "Command result indicated failure"
+assert_contains "ssh_sync $CLIENT '${cmd}'" "result indicated failure"
 
 cmd="$bre_client -S -n10.240.106.104 -d01020304050607 -v01020304050607 -I"
 echo "$cmd"

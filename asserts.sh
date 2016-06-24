@@ -20,7 +20,7 @@ tc_start()
 
 tc_fail()
 {
-    (>&2 echo "##teamcity[testFailed type='comparisonFailure' name='$CURRENT_TEST' message='$1' details='$2' expected='$3' actual='$4']")
+    echo "##teamcity[message text='Output Comparison Error' errorDetails='$2' status='ERROR'"
 }
 
 tc_finish()
