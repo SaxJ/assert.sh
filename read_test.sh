@@ -11,6 +11,7 @@ test_start "VersionTest"
 ssh_start $SERVER "killall bre_server_app; $bre_server"
 
 cmd="$bre_client -n10.240.106.104 -Vs"
+echo "$cmd"
 assert_contains "ssh_sync $CLIENT '$cmd'" "Got Server Information" #successfully get server info
 
 # kill server and attempt to get server info
@@ -25,6 +26,7 @@ test_start "ReadTests"
 ssh_start $SERVER "killall bre_server_app; $bre_server"
 
 cmd="$bre_client -n10.240.106.104 -d01020304050607 -v01020304050607 -R"
+echo "$cmd"
 assert_contains "ssh_sync $CLIENT '${cmd}5'" "Read test passed" #5 reads
 assert_contains "ssh_sync $CLIENT '${cmd}10'" "Read test passed" #10 reads
 assert_contains "ssh_sync $CLIENT '${cmd}100'" "Read test passed" #100 reads
@@ -41,6 +43,7 @@ test_start "ReadTests_RS485"
 ssh_start $SERVER "killall bre_server_app; $bre_server_rs485"
 
 cmd="$bre_client -a1 -r/dev/ttymxc4 -d01020304050607 -v01020304050607 -R"
+echo "$cmd"
 assert_contains "ssh_sync $CLIENT_VIPER '${cmd}5'" "Read test passed" #5 reads
 assert_contains "ssh_sync $CLIENT_VIPER '${cmd}10'" "Read test passed" #10 reads
 assert_contains "ssh_sync $CLIENT_VIPER '${cmd}100'" "Read test passed" #100 reads
@@ -105,3 +108,23 @@ assert_contains "ssh_sync $CLIENT '${cmd}'" "TXN_TEST_PURSE_USAGE"
 test_finish
 
 ########################################
+
+test_start "Server_Logs_Disabled"
+
+
+cmd="$bre_client -n10.240.106.104 -lg2 -ll1 -cp"
+echo "$cmd"
+assert_not_contains "ssh_sync $CLIENT '${cmd}'" "[SERVER]"
+
+test_finish
+
+########################################
+
+test_start "Server_Logs_Enabled"
+
+
+cmd="$bre_client -n10.240.106.104 -lg1 -ll2 -cp"
+echo "$cmd"
+assert_contains "ssh_sync $CLIENT '${cmd}'" "[SERVER]"
+
+test_finish

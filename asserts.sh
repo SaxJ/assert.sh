@@ -72,3 +72,16 @@ assert_contains()
         tc_fail "Assertion failed" "Command output did not contain desired string." "$( tc_escape_str "$4" )" "$( tc_escape_str "$result" )"
     fi
 }
+
+assert_not_contains()
+{
+    result="$(eval $1)"
+    if [[ "$result" == *"$2"* ]]
+    then
+        echo "[ASSERTION] failed"
+        tc_fail "Assertion failed" "Command output did not contain desired string." "$( tc_escape_str "$4" )" "$( tc_escape_str "$result" )"
+    else
+        echo "[ASSERTION] passed"
+        echo "##teamcity[progressMessage '$( tc_escape_str "$result" )']"
+    fi
+}
