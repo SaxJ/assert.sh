@@ -25,7 +25,7 @@ tc_start()
 
 tc_fail()
 {
-    echo "##teamcity[message text='Output Comparison Error' errorDetails='$( tc_escape_str "$4" )' status='ERROR'"
+    echo "##teamcity[message text='Output Comparison Error' errorDetails='$( tc_escape_str "$4" )' status='ERROR']"
 }
 
 tc_finish()
