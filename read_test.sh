@@ -112,7 +112,7 @@ test_finish
 test_start "Server_Logs_Disabled"
 
 
-cmd="$bre_client -n10.240.106.104 -lg2 -ll1 -cp"
+cmd="$bre_client -n10.240.106.104 -lg2 -ll1 -cd"
 echo "$cmd"
 assert_not_contains "ssh_sync $CLIENT '${cmd}'" "[SERVER]"
 
@@ -123,7 +123,7 @@ test_finish
 test_start "Server_Logs_Enabled"
 
 
-cmd="$bre_client -n10.240.106.104 -lg1 -ll2 -cp"
+cmd="$bre_client -n10.240.106.104 -lg1 -ll2 -cd"
 echo "$cmd"
 assert_contains "ssh_sync $CLIENT '${cmd}'" "[SERVER]"
 
